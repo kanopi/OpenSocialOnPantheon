@@ -6,9 +6,14 @@ workflows:
     after:
       -
         type: webphp
-        description: 'Run composer install'
-        script: private/scripts/deploy_product/composer-install.php
+        description: 'Run composer prepare-for-pantheon'
+        script: private/scripts/deploy_product/prepare-for-pantheon.php
       -
         type: webphp
-        description: 'Run composer drupal-scaffold'
-        script: private/scripts/deploy_product/drupal-scaffold.php
+        description: 'Run composer install & drupal-scaffold'
+        script: private/scripts/deploy_product/composer-install.php
+  sync_code:
+    after:
+      - type: webphp
+        description: Push changes back to GitHub if needed
+        script: private/scripts/quicksilver/quicksilver-pushback/push-back-to-github.php
